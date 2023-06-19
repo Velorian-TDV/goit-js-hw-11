@@ -23,6 +23,15 @@ searchQuery.addEventListener('change', () => {
 
 });
 
+let carosel = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250
+});
+
+carosel.on('error.simplelightbox', function (e) {
+    console.log(e);
+});  
+
 async function createElement(arr) {
 
     const htmlElements = arr.map(element => `
@@ -59,14 +68,7 @@ async function createElement(arr) {
 
     gallery.insertAdjacentHTML('beforeend', htmlElements.join(''));
 
-    let carosel = new SimpleLightbox('.gallery a', {
-        captionsData: 'alt',
-        captionDelay: 250
-    });
-
-    carosel.on('error.simplelightbox', function (e) {
-        console.log(e);
-    });
+    carosel.refresh();
 
 }
 
@@ -115,7 +117,6 @@ async function addImages() {
         params: {
             key: KEY,
             q: searchQuery.value,
-            category: 'animals',
             image_type: 'photo',
             orientation: 'horizontal',
             safesearch: true,
